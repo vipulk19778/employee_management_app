@@ -1,0 +1,196 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-6">
+      <h2>Employees</h2>
+    </div>
+    <div class="col-6 text-end">
+      <button class="btn btn-success" (click)="isFormVisible.set(true)">
+        Add New
+      </button>
+    </div>
+  </div>
+  @if (isFormVisible()) {
+  <form (ngSubmit)="onSubmit()" #employeeForm="ngForm" class="mb-4">
+    <div class="row mb-3">
+      <!-- Employee Name -->
+      <div class="col-md-6">
+        <label for="employeeName">Employee Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="employeeName"
+          placeholder="Enter name"
+          required
+          [(ngModel)]="employee.name"
+          name="employeeName"
+          #employeeName="ngModel"
+        />
+        <div
+          *ngIf="employeeName.invalid && employeeName.touched"
+          class="text-danger"
+        >
+          Employee Name is required
+        </div>
+      </div>
+
+      <!-- Contact No -->
+      <div class="col-md-6">
+        <label for="contactNo">Contact No</label>
+        <input
+          type="tel"
+          class="form-control"
+          id="contactNo"
+          placeholder="Enter contact number"
+          required
+          [(ngModel)]="employee.contactNo"
+          name="contactNo"
+          #contactNo="ngModel"
+        />
+        <div *ngIf="contactNo.invalid && contactNo.touched" class="text-danger">
+          Contact No is required
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <!-- Email -->
+      <div class="col-md-6">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          placeholder="Enter email"
+          required
+          [(ngModel)]="employee.email"
+          name="email"
+          #email="ngModel"
+        />
+        <div *ngIf="email.invalid && email.touched" class="text-danger">
+          Valid email is required
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="col-md-6">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          placeholder="Enter password"
+          required
+          [(ngModel)]="employee.password"
+          name="password"
+          #password="ngModel"
+        />
+        <div *ngIf="password.invalid && password.touched" class="text-danger">
+          Password is required
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <!--Parent Department (Dropdown) -->
+      <div class="col-md-6">
+        <label for="parentDepartment">Parent Department</label>
+        <select
+          class="form-control"
+          id="parentDepartment"
+          required
+          [(ngModel)]="employee.parentDepartment"
+          name="parentDepartment"
+          #parentDepartment="ngModel"
+        >
+          <option value="" disabled>Select Department</option>
+          @for(item of parentDeptList();track $index){
+          <option [value]="item.departmentId">{{ item.departmentName }}</option>
+          }
+        </select>
+        <div
+          *ngIf="parentDepartment.invalid && parentDepartment.touched"
+          class="text-danger"
+        >
+          Parent Department is required
+        </div>
+      </div>
+      <!--Child Department (Dropdown) -->
+      <div class="col-md-6">
+        <label for="childDepartment">Child Department</label>
+        <select
+          class="form-control"
+          id="childDepartment"
+          required
+          [(ngModel)]="employee.childDepartment"
+          name="childDepartment"
+          #childDepartment="ngModel"
+        >
+          <option value="" disabled>Select Department</option>
+          <option *ngFor="let dept of departments" [value]="dept">
+            {{ dept }}
+          </option>
+        </select>
+        <div
+          *ngIf="childDepartment.invalid && childDepartment.touched"
+          class="text-danger"
+        >
+          Child Department is required
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <!-- Gender (Dropdown) -->
+      <div class="col-md-6">
+        <label for="gender">Gender</label>
+        <select
+          class="form-control"
+          id="gender"
+          required
+          [(ngModel)]="employee.gender"
+          name="gender"
+          #gender="ngModel"
+        >
+          <option value="" disabled>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <div *ngIf="gender.invalid && gender.touched" class="text-danger">
+          Gender is required
+        </div>
+      </div>
+
+      <!-- Role -->
+      <div class="col-md-6">
+        <label for="role">Role</label>
+        <input
+          type="text"
+          class="form-control"
+          id="role"
+          placeholder="Enter role"
+          required
+          [(ngModel)]="employee.role"
+          name="role"
+          #role="ngModel"
+        />
+        <div *ngIf="role.invalid && role.touched" class="text-danger">
+          Role is required
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="button"
+      class="btn btn-primary me-2"
+      [disabled]="employeeForm.invalid"
+    >
+      Submit
+    </button>
+    <button class="btn btn-success" (click)="isFormVisible.set(false)">
+      Close
+    </button>
+  </form>
+  }
+</div>
